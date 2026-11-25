@@ -29,8 +29,8 @@ void EmitSpinLockLock(Xbyak::CodeGenerator& code, Xbyak::Reg64 ptr, Xbyak::Reg32
 
 void EmitSpinLockUnlock(Xbyak::CodeGenerator& code, Xbyak::Reg64 ptr, Xbyak::Reg32 tmp) {
     code.xor_(tmp, tmp);
+    // A memory XCHG is implicitly locked and already orders loads and stores.
     code.xchg(code.dword[ptr], tmp);
-    code.mfence();
 }
 
 namespace {
